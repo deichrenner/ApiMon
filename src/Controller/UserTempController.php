@@ -134,13 +134,13 @@ class UserTempController extends ControllerBase {
         'uid' => $user,
         'type' => 'user_temperature',
         'langcode' => 'en',
-        'title' => $this->t('Temperature logged at !date', [
-          '!date' => format_date(time(), 'custom', 'd.m.Y H:i:s'),
+        'title' => $this->t('Temperature logged at @date', [
+          '@date' => format_date(time(), 'custom', 'd.m.Y H:i:s'),
         ]),
         'promote' => 0,
       ];
       $node = entity_create('node', $edit);
-      $node->get('field_user_temperature')->setValue(SafeMarkup::checkPlain($json->temp));
+      $node->get('field_user_temperature')->setValue($json->temp);
       $node->save();
       $nid = $node->id();
     }
