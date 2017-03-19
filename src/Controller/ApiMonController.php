@@ -140,7 +140,7 @@ class ApiMonController extends ControllerBase {
         'promote' => 0,
       ];
       $node = entity_create('node', $edit);
-      $node->get('field_user_weight')->setValue(SafeMarkup::checkPlain($json->weight));
+      $node->get('field_user_weight')->setValue($json->weight);
       $node->save();
       $nid = $node->id();
     }
