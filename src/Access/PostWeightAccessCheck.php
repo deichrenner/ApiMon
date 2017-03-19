@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\user_temp\Access\PostTempAccessCheck.
+ * Contains Drupal\apimon\Access\PostWeightAccessCheck.
  */
 
-namespace Drupal\user_temp\Access;
+namespace Drupal\apimon\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\Access\AccessInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Access check for user registration routes.
  */
-class PostTempAccessCheck implements AccessInterface {
+class PostWeightAccessCheck implements AccessInterface {
 
   /**
    * Checks access.
@@ -31,13 +31,13 @@ class PostTempAccessCheck implements AccessInterface {
       return AccessResult::forbidden();
     }
     $headers = $request->headers->all();
-    if (empty($headers['x-user-temp']) || empty($headers['x-user-temp'][0])) {
+    if (empty($headers['x-user-weight']) || empty($headers['x-user-weight'][0])) {
       return AccessResult::forbidden();
     }
     // Check if the actual path is allowed for the actual "api-key".
     $user = $request->attributes->get('user');
-    $key = $headers['x-user-temp'][0];
-    if ((bool) Database::getConnection()->query("SELECT * FROM {user_temp_keys} u WHERE u.uid = :uid AND u.user_key = :user_key", [
+    $key = $headers['x-user-weight'][0];
+    if ((bool) Database::getConnection()->query("SELECT * FROM {apimon_keys} u WHERE u.uid = :uid AND u.user_key = :user_key", [
       ':uid' => $user,
       ':user_key' => $key
     ])->fetchField()) {

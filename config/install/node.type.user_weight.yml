@@ -7,9 +7,9 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: 'main:'
-name: 'User temperature'
-type: user_temperature
-description: 'Used for saving user temperatures'
+name: 'User weight'
+type: user_weight
+description: 'Used for saving user weights'
 help: ''
 new_revision: false
 preview_mode: 1

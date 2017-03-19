@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.user_weight.field_user_weight
+    - node.type.user_weight
+  module:
+    - user
+id: node.user_weight.default
+targetEntityType: node
+bundle: user_weight
+mode: default
+content:
+  field_user_weight:
+    type: number_decimal
+    weight: 0
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    label: above
+  links:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

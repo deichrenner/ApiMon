@@ -1,0 +1,4 @@
+apimon.weights:
+  route_name: apimon.weights
+  base_route: entity.user.canonical
+  title: 'Weights'

@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.user_temperature.field_user_temperature
-    - node.type.user_temperature
+    - field.field.node.user_weight.field_user_weight
+    - node.type.user_weight
   module:
     - user
-id: node.user_temperature.default
+id: node.user_weight.default
 targetEntityType: node
-bundle: user_temperature
+bundle: user_weight
 mode: default
 content:
-  field_user_temperature:
+  field_user_weight:
     type: number_decimal
     weight: 0
     settings:

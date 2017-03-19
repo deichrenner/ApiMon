@@ -1,0 +1,14 @@
+apimon.weights:
+  path: '/user/{user}/weights'
+  defaults:
+    _controller: '\Drupal\apimon\Controller\ApiMonController::weight'
+    _title: 'User weights'
+  requirements:
+    _permission: 'create own weights'
+apimon.post_weights:
+  path: '/user/{user}/weights_post'
+  defaults:
+    _controller: '\Drupal\apimon\Controller\ApiMonController::post'
+    _title: 'Post user weights'
+  requirements:
+    _access_apimon_post: 'TRUE'

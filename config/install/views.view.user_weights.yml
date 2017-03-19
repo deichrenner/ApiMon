@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_user_temperature
-    - node.type.user_temperature
+    - field.storage.node.field_user_weight
+    - node.type.user_weight
   module:
     - node
     - user
-id: user_temperatures
-label: 'User temperatures'
+id: user_weights
+label: 'User weights'
 module: views
-description: 'Used to display the user temperatures of a user.'
+description: 'Used to display the measured weights of a users scale.'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -81,7 +81,7 @@ display:
           description: ''
           columns:
             title: title
-            field_user_temperature: field_user_temperature
+            field_user_weight: field_user_weight
           info:
             title:
               sortable: false
@@ -90,7 +90,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            field_user_temperature:
+            field_user_weight:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -154,10 +154,10 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_user_temperature:
-          id: field_user_temperature
-          table: node__field_user_temperature
-          field: field_user_temperature
+        field_user_weight:
+          id: field_user_weight
+          table: node_field_user_weight
+          field: field_user_weight
           relationship: none
           group_type: group
           admin_label: ''
@@ -237,7 +237,7 @@ display:
           table: node_field_data
           field: type
           value:
-            user_temperature: user_temperature
+            user_weight: user_weight
           entity_type: node
           entity_field: type
           plugin_id: bundle
@@ -300,7 +300,7 @@ display:
           entity_field: uid
           plugin_id: numeric
       display_extenders: {  }
-      title: 'User temperatures'
+      title: 'User weights'
     cache_metadata:
       contexts:
         - 'languages:language_content'

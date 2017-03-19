@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Contains apimon.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function apimon_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the apimon module.
+    case 'help.page.apimon':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Log weights per user and scale.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function apimon_theme() {
+  $theme = [
+    'apimon-user-page' => [
+      'variables' => [
+        'api_key' => '',
+        'post_url' => '',
+        'user_view' => []
+      ],
+    ],
+  ];
+
+  return $theme;
+}

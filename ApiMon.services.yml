@@ -1,0 +1,5 @@
+services:
+  access_check.apimon.post_weight:
+    class: Drupal\apimon\Access\PostWeightAccessCheck
+    tags:
+      - { name: access_check, applies_to: _access_apimon_post }

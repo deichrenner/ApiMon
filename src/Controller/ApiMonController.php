@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\user_temp\Controller\UserTempController.
+ * Contains Drupal\ApiMon\Controller\ApiMonController.
  */
 
-namespace Drupal\user_temp\Controller;
+namespace Drupal\ApiMon\Controller;
 
 use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
@@ -22,11 +22,11 @@ use Symfony\Component\HttpKernel\Exception\FlattenException;
 
 
 /**
- * Class UserTempController.
+ * Class ApiMonController.
  *
- * @package Drupal\user_temp\Controller
+ * @package Drupal\ApiMon\Controller
  */
-class UserTempController extends ControllerBase {
+class ApiMonController extends ControllerBase {
 
   /**
    * The database service.
@@ -44,7 +44,7 @@ class UserTempController extends ControllerBase {
     );
   }
   /**
-   * Construct the userTempController.
+   * Construct the ApiMonController.
    *
    * @param \Drupal\Core\Database\Connection $database
    *   A database connection.
@@ -56,7 +56,7 @@ class UserTempController extends ControllerBase {
     $this->views_factory = $views_factory;
   }
   /**
-   * User tab page for displaying user_temp info.
+   * User tab page for displaying apimon info.
    *
    * @param \Drupal\user\UserInterface $user
    *   A Drupal user.
@@ -64,15 +64,15 @@ class UserTempController extends ControllerBase {
    * @return string
    *   Return some markup.
    */
-  public function temp(UserInterface $user) {
+  public function weight(UserInterface $user) {
     // See if the user already has an API key.
-    $user_key_object = $this->database->query("SELECT * FROM {user_temp_keys} u WHERE u.uid = :uid", array(':uid' => $user->id()))->fetchObject();
+    $user_key_object = $this->database->query("SELECT * FROM {apimon_keys} u WHERE u.uid = :uid", array(':uid' => $user->id()))->fetchObject();
     if (!$user_key_object) {
       // The user does not have a key. Generate one for them.
       $user_key = sha1(uniqid());
       // Insert it to the database.
       $this->database
-        ->insert('user_temp_keys')
+        ->insert('apimon_keys')
         ->fields(array(
           'uid' => $user->id(),
           'user_key' => $user_key,
@@ -84,26 +84,26 @@ class UserTempController extends ControllerBase {
     }
 
     // Generate the URL which we should use in the CURL explaination.
-    $post_url = Url::fromRoute('user_temp.post_temperatures', [
+    $post_url = Url::fromRoute('apimon.post_weights', [
       'user' => $user->id(),
     ], [
       'absolute' => TRUE,
     ])->toString();
 
-    // Also get a view of the users temperatures.
-    $view = entity_load('view', 'user_temperatures');
+    // Also get a view of the users weights.
+    $view = entity_load('view', 'user_weights');
 
     // Add the variables to the render array and render from our template.
     return [
       '#api_key' => $user_key,
       '#user_view' => $this->views_factory->get($view)->preview(),
       '#post_url' => $post_url,
-      '#theme' => 'user-temp-user-page',
+      '#theme' => 'apimon-user-page',
     ];
   }
 
   /**
-   * POST handler for processing the temperatures.
+   * POST handler for processing the weights.
    *
    * @param string $user
    *   The uid in the route.
@@ -123,24 +123,24 @@ class UserTempController extends ControllerBase {
     if (!$json = json_decode($data)) {
       throw new AccessDeniedHttpException();
     }
-    // If it does not include a temperature, we don't want it.
-    if (empty($json->temp)) {
+    // If it does not include a weight, we don't want it.
+    if (empty($json->weight)) {
       throw new AccessDeniedHttpException();
     }
-    // Then create a node with the temperature.
+    // Then create a node with the weight.
     $nid = NULL;
     try {
       $edit = [
         'uid' => $user,
-        'type' => 'user_temperature',
+        'type' => 'user_weight',
         'langcode' => 'en',
-        'title' => $this->t('Temperature logged at !date', [
-          '!date' => format_date(time(), 'custom', 'd.m.Y H:i:s'),
+        'title' => $this->t('Weight logged at @date', [
+          '@date' => format_date(time(), 'custom', 'd.m.Y H:i:s'),
         ]),
         'promote' => 0,
       ];
       $node = entity_create('node', $edit);
-      $node->get('field_user_temperature')->setValue(SafeMarkup::checkPlain($json->temp));
+      $node->get('field_user_weight')->setValue(SafeMarkup::checkPlain($json->weight));
       $node->save();
       $nid = $node->id();
     }

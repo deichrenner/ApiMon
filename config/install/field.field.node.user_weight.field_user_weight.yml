@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_user_temperature
-    - node.type.user_temperature
-id: node.user_temperature.field_user_temperature
-field_name: field_user_temperature
+    - field.storage.node.field_user_weight
+    - node.type.user_weight
+id: node.user_weight.field_user_weight
+field_name: field_user_weight
 entity_type: node
-bundle: user_temperature
-label: Temperature
+bundle: user_weight
+label: weight
 description: ''
 required: false
 translatable: false
